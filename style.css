@@ -1,0 +1,132 @@
+/* --- CSS Variables (Dark Mode Default) --- */
+:root {
+    --bg-color: #1f1f1f; --surface-color: #2a2a2a; --primary-color: #4a90e2; --primary-hover-color: #3a80d2; --text-color: #e0e0e0; --text-muted-color: #a0a0a0; --border-color: #404040; --input-bg-color: #333333; --input-border-color: #505050; --danger-color: #e57373; --danger-hover-color: #d32f2f; --warning-color: #ffb74d; --warning-hover-color: #f57c00; --success-color: #81c784; --success-hover-color: #388e3c; --cancel-color: #757575; --cancel-hover-color: #616161; --shadow-color: rgba(0, 0, 0, 0.3); --grab-cursor: grab; --grabbing-cursor: grabbing;
+    --icon-color: var(--text-muted-color); --icon-hover-color-edit: var(--warning-color); --icon-hover-color-delete: var(--danger-color); --drop-indicator-color: var(--primary-color);
+}
+
+/* --- Basic Styling --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding-top: 30px; padding-bottom: 50px; font-size: 16px; position: relative; }
+button { cursor: pointer; padding: 10px 15px; border: none; border-radius: 5px; background-color: var(--primary-color); color: var(--tag-text); /* Using tag-text for default contrast */ font-size: 1em; font-weight: bold; transition: background-color 0.2s ease; }
+button:hover { background-color: var(--primary-hover-color); }
+button:focus, input:focus, select:focus, textarea:focus, .icon-btn:focus { outline: none; box-shadow: none; }
+
+/* --- Specific Button Colors --- */
+#save-add-btn,      /* Add modal save */
+#save-edit-btn,     /* Edit modal save */
+#open-add-modal-btn, /* Top Add button */
+#export-btn,        /* Export button */
+#import-btn         /* Import button */
+{
+    background-color: var(--primary-color); /* Blue background */
+    color: #ffffff !important; /* Force white text */
+}
+#save-add-btn:hover, #save-edit-btn:hover, #open-add-modal-btn:hover, #export-btn:hover, #import-btn:hover {
+     background-color: var(--primary-hover-color); /* Darker blue on hover */
+}
+
+
+input[type="text"], input[type="password"], input[type="date"], input[type="search"], select { padding: 10px; border: 1px solid var(--input-border-color); border-radius: 5px; font-size: 1em; width: 100%; margin-bottom: 10px; background-color: var(--input-bg-color); color: var(--text-color); }
+input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; height: 1em; width: 1em; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" fill="%23a0a0a0"><polygon points="10 1.01 8.99 0 5 3.99 1.01 0 0 1.01 3.99 5 0 8.99 1.01 10 5 6.01 8.99 10 10 8.99 6.01 5"/></svg>') center/1em no-repeat; cursor: pointer; opacity: 0.7; transition: opacity .2s; }
+input[type="search"]::-webkit-search-cancel-button:hover { opacity: 1; }
+select { appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%23a0a0a0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; padding-right: 35px; }
+
+/* --- Main App Container --- */
+#app-container {
+    display: block; /* Show by default (no login) */
+    background-color: var(--surface-color); padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px var(--shadow-color); width: 100%; max-width: 850px; border: 1px solid var(--border-color); position: relative;
+}
+
+/* --- Settings Cogwheel --- */
+#settings-cog { position: absolute; top: 15px; right: 15px; font-size: 1.8em; cursor: pointer; color: var(--text-muted-color); transition: color 0.2s ease, transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease; z-index: 1050; }
+#settings-cog:hover { color: var(--primary-color); transform: rotate(45deg); }
+body.modal-open #settings-cog { opacity: 0; visibility: hidden; transform: rotate(0deg) scale(0.8); }
+
+h1 { text-align: center; margin-bottom: 25px; color: var(--primary-color); font-weight: 600; }
+
+/* --- Controls Area --- */
+ .controls-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 10px; flex-wrap: wrap; }
+ .search-container { display: flex; align-items: center; flex-grow: 1; max-width: 500px; gap: 8px; }
+ #search-input { flex-grow: 1; margin-bottom: 0; padding-right: 30px; }
+ /* Filter button removed */
+ #open-add-modal-btn { padding: 10px 20px; font-size: 1em; white-space: nowrap; } /* Color set individually */
+
+/* --- Tabs --- */
+.tab-navigation { display: flex; justify-content: center; border-bottom: 2px solid var(--border-color); margin-bottom: 20px; }
+.tab-button { padding: 10px 20px; cursor: pointer; border: none; background-color: transparent; font-size: 1.1em; color: var(--text-muted-color); border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color 0.2s ease, border-color 0.2s ease, font-weight 0.2s ease; font-weight: normal; }
+.tab-button:hover { color: var(--text-color); background-color: transparent; }
+.tab-button.active { color: var(--primary-color); border-bottom-color: var(--primary-color); font-weight: bold; }
+
+/* --- Watch Lists --- */
+.watchlist { display: none; list-style: none; padding: 0; max-height: 540px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 5px; padding: 10px; background-color: var(--bg-color); position: relative; }
+.watchlist.active { display: block; }
+.watchlist::-webkit-scrollbar { width: 8px; }
+.watchlist::-webkit-scrollbar-track { background: var(--input-bg-color); border-radius: 4px; }
+.watchlist::-webkit-scrollbar-thumb { background-color: var(--text-muted-color); border-radius: 4px; border: 2px solid var(--input-bg-color); }
+.watchlist::-webkit-scrollbar-thumb:hover { background-color: var(--primary-color); }
+
+.watchlist li { background-color: var(--input-bg-color); border: 1px solid var(--border-color); padding: 12px 15px; margin-bottom: 10px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; cursor: var(--grab-cursor); transition: background-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease; position: relative; }
+ .watchlist li:last-child { margin-bottom: 0; }
+.watchlist li:hover { background-color: var(--border-color); }
+.watchlist li.dragging { opacity: 0.4; background-color: var(--surface-color); box-shadow: 0 4px 8px var(--shadow-color); cursor: var(--grabbing-cursor); }
+
+/* --- Drag and Drop Indicator --- */
+.drop-indicator { position: absolute; left: 5px; right: 5px; height: 3px; background-color: var(--drop-indicator-color); border-radius: 2px; pointer-events: none; z-index: 1; transition: top 0.1s ease-out; display: none; }
+
+.item-details { flex-grow: 1; margin-right: 15px; }
+.item-details strong { display: block; font-size: 1.2em; margin-bottom: 5px; color: var(--text-color); word-break: break-word; }
+.item-meta { display: flex; flex-wrap: wrap; gap: 5px 15px; font-size: 0.9em; color: var(--text-muted-color); margin-top: 5px; }
+.item-meta span { display: inline-flex; align-items: baseline; white-space: normal; }
+.item-meta .label { font-weight: bold; color: var(--text-muted-color); margin-right: 5px; white-space: nowrap; }
+
+/* --- Action Icons --- */
+.item-actions { white-space: nowrap; display: flex; align-items: center; gap: 12px; }
+.icon-btn { background: transparent; border: none; padding: 0; color: var(--icon-color); font-size: 1.4em; cursor: pointer; transition: color 0.2s ease, transform 0.2s ease; line-height: 1; }
+.icon-btn:hover { transform: scale(1.15); }
+.edit-icon-btn:hover { color: var(--icon-hover-color-edit); }
+.delete-icon-btn:hover { color: var(--icon-hover-color-delete); }
+
+/* --- Modals --- */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 20px; }
+.modal-content { background-color: var(--surface-color); margin: auto; padding: 30px; border: 1px solid var(--border-color); width: 90%; max-width: 550px; /* Adjusted width back */ border-radius: 8px; box-shadow: 0 5px 15px var(--shadow-color); position: relative; }
+.modal h2 { margin-top: 0; margin-bottom: 25px; color: var(--primary-color); text-align: center; }
+.modal label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text-muted-color); }
+.modal input[type="text"], .modal input[type="date"], .modal select { width: 100%; margin-bottom: 20px; }
+.modal-actions { text-align: right; margin-top: 25px; }
+.modal-actions button { margin-left: 10px; padding: 10px 20px; }
+.modal-actions .cancel-btn { background-color: var(--cancel-color); color: var(--text-color); }
+.modal-actions .cancel-btn:hover { background-color: var(--cancel-hover-color); }
+.modal-actions .save-btn { background-color: var(--primary-color); /* Color set individually */ }
+.modal-actions .save-btn:hover { background-color: var(--primary-hover-color); }
+
+/* --- Simplified Genre/Tag Styling (No tags needed for V1.1) --- */
+/* Remove tag container styles if not used */
+
+/* --- Add/Edit Modal Specifics --- */
+#add-type-selection, #edit-type-selection { margin-bottom: 20px; }
+#add-type-selection label, #edit-type-selection label { display: inline-block; margin-right: 15px; font-weight: normal; color: var(--text-color); cursor: pointer; }
+#add-type-selection input[type="radio"], #edit-type-selection input[type="radio"] { margin-right: 5px; accent-color: var(--primary-color); }
+#add-upcoming-checkbox-group, #edit-upcoming-checkbox-group { margin-top: 20px; }
+/* Remove hidden class for upcoming checkbox */
+#add-upcoming-checkbox-group label, #edit-upcoming-checkbox-group label { display: inline-flex; /* Align label and checkbox */ align-items: center; cursor: pointer; font-weight: normal; color: var(--text-color); margin-bottom: 0; }
+#add-upcoming-checkbox-group input[type="checkbox"], #edit-upcoming-checkbox-group input[type="checkbox"] { margin-left: 8px; /* Space after label text */ width: auto; margin-bottom: 0; accent-color: var(--primary-color); height: 1.1em; width: 1.1em; }
+/* Remove duration/date group margins as they are sequential now */
+#add-duration-date-group, #edit-duration-date-group { margin-bottom: 0; }
+
+
+/* --- Settings Modal Specifics --- */
+#settings-modal .modal-content { text-align: center; }
+#settings-modal h2 { margin-bottom: 30px; }
+#settings-modal .settings-action { margin-bottom: 20px; display: flex; justify-content: center; align-items: center; gap: 15px; }
+#settings-modal .settings-action button { min-width: 120px; }
+#settings-modal .help-button { background: none; color: var(--primary-color); border: 1px solid var(--primary-color); font-weight: bold; font-size: 1.2em; padding: 5px 10px; line-height: 1; }
+#settings-modal .help-button:hover { background-color: rgba(74, 144, 226, 0.1); color: var(--primary-hover-color); border-color: var(--primary-hover-color); }
+#import-file-input { display: none; }
+#import-status, #export-status, #copy-status { min-height: 1.5em; margin-top: 5px; font-size: 0.9em; }
+#import-status.success, #export-status.success, #copy-status.success { color: var(--success-color); }
+#import-status.error, #export-status.error { color: var(--danger-color); }
+
+/* --- Footer --- */
+#credits-footer { position: fixed; bottom: 10px; right: 15px; font-size: 0.8em; color: var(--text-muted-color); cursor: default; z-index: 10; user-select: none; }
+#credits-footer:hover::after { content: attr(title); position: absolute; bottom: 100%; right: 0; background-color: var(--surface-color); color: var(--text-color); padding: 3px 6px; border-radius: 3px; font-size: 0.9em; white-space: nowrap; border: 1px solid var(--border-color); margin-bottom: 5px; box-shadow: 0 2px 5px var(--shadow-color); }

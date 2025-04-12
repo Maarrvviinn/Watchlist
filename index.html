@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watchlist</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to CSS file -->
+</head>
+<body>
+
+    <!-- Main Application -->
+    <div id="app-container">
+        <div id="settings-cog" title="Einstellungen">⚙️</div>
+        <h1>Watchlist</h1>
+
+         <!-- Controls Area (Search + Add Button) -->
+         <div class="controls-area">
+             <div class="search-container">
+                 <input type="search" id="search-input" placeholder="Titel suchen...">
+                 <!-- Filter button removed for V1.1 -->
+             </div>
+             <div class="add-item-controls">
+                 <button id="open-add-modal-btn">Hinzufügen</button>
+             </div>
+         </div>
+
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-button active" data-tab="serien">Serien</button>
+            <button class="tab-button" data-tab="filme">Filme</button>
+            <button class="tab-button" data-tab="upcoming">Upcoming</button>
+        </div>
+
+        <!-- Watch Lists -->
+        <ul id="serien-list" class="watchlist active"></ul>
+        <ul id="filme-list" class="watchlist"></ul>
+        <ul id="upcoming-list" class="watchlist"></ul>
+        <!-- Drop indicator will be added dynamically here -->
+    </div>
+
+    <!-- Add Item Modal -->
+    <div id="add-modal" class="modal">
+        <div class="modal-content">
+             <h2>Neuen Eintrag hinzufügen</h2>
+             <div><label for="add-title">Titel:</label><input type="text" id="add-title" required></div>
+              <div id="add-type-selection"><label>Typ:</label><label><input type="radio" name="add-item-type" value="serien" checked> Serie</label><label><input type="radio" name="add-item-type" value="filme"> Film</label></div>
+              <!-- Simplified Genre Input -->
+              <div><label for="add-genre">Genre:</label><input type="text" id="add-genre"></div>
+             <div><label for="add-duration">Dauer:</label><input type="text" id="add-duration" placeholder="z.B. 120 min / 3 Staffeln"></div>
+             <!-- Upcoming Checkbox -->
+             <div id="add-upcoming-checkbox-group"><label for="add-upcoming-checkbox">Upcoming: <input type="checkbox" id="add-upcoming-checkbox"></label></div>
+             <div class="modal-actions"><button id="save-add-btn" class="save-btn">Speichern</button><button id="cancel-add-btn" class="cancel-btn">Abbrechen</button></div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+             <h2>Eintrag bearbeiten</h2>
+             <input type="hidden" id="edit-item-id">
+             <input type="hidden" id="edit-item-type">
+             <div><label for="edit-title">Titel:</label><input type="text" id="edit-title"></div>
+              <!-- Simplified Genre Input -->
+             <div><label for="edit-genre">Genre:</label><input type="text" id="edit-genre"></div>
+             <div><label for="edit-duration">Dauer:</label><input type="text" id="edit-duration"></div>
+              <!-- Upcoming Checkbox (Always visible in V1.1) -->
+             <div id="edit-upcoming-checkbox-group"><label for="edit-upcoming-checkbox">Upcoming: <input type="checkbox" id="edit-upcoming-checkbox"></label></div>
+             <div class="modal-actions"><button id="save-edit-btn" class="save-btn">Speichern</button><button id="cancel-edit-btn" class="cancel-btn">Abbrechen</button></div>
+        </div>
+    </div>
+
+     <!-- Settings Modal -->
+     <div id="settings-modal" class="modal">
+         <div class="modal-content">
+             <h2>Einstellungen</h2>
+             <div class="settings-action"><button id="export-btn">Exportieren</button><div id="export-status"></div></div>
+             <div class="settings-action"><button id="import-btn">Importieren</button><input type="file" id="import-file-input" accept=".json"><div id="import-status"></div></div>
+             <div class="settings-action"><label>Format Hilfe:</label><button id="copy-help-btn" class="help-button" title="AI Prompt kopieren">?</button><div id="copy-status"></div></div>
+             <div class="modal-actions"><button id="close-settings-btn" class="cancel-btn">Schließen</button></div>
+         </div>
+     </div>
+
+     <!-- Footer -->
+     <div id="credits-footer" title="V1.1"> <!-- Updated Version -->
+         made by Marvin with ❤️
+     </div>
+
+    <script src="script.js" defer></script> <!-- Link to JS file -->
+</body>
+</html>
