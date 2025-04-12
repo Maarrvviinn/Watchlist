@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => { // Ensure this wraps the e
             titleHtml += ` <span class="item-type-label">(${typeLabel})</span>`;
         }
 
-        // Construct innerHTML (This structure seems fine, errors likely elsewhere)
+  
         li.innerHTML = `
             <div class="item-details">
                 <strong>${titleHtml}</strong>
@@ -193,14 +193,14 @@ document.addEventListener('DOMContentLoaded', () => { // Ensure this wraps the e
                 <button class="icon-btn delete-icon-btn" title="Löschen">🗑️</button>
             </div>`;
 
-        // Attach listeners (Seems fine)
+        // Attach listeners
         const editBtn = li.querySelector('.edit-icon-btn');
-        if (editBtn) { // Added check just in case querySelector fails
+        if (editBtn) { 
              editBtn.addEventListener('click', () => { openEditModal(item); });
         }
 
         const deleteBtn = li.querySelector('.delete-icon-btn');
-        if(deleteBtn) { // Added check
+        if(deleteBtn) { 
              deleteBtn.addEventListener('click', () => deleteItem(item.id, item.type));
         }
 
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => { // Ensure this wraps the e
     function closeAddModal() { closeModal(addModal); addTagsContainer.classList.remove('visible'); }
     function clearAddModal() { addTitleInput.value = ''; addTagsInput.value = ''; addTagsContainer.innerHTML = ''; addTagsContainer.classList.remove('visible'); addDurationInput.value = ''; addUpcomingCheckbox.checked = false; document.querySelector('input[name="add-item-type"][value="serien"]').checked = true; }
     function saveAddItem() { // Double-checked element variable names
-        const title = addTitleInput.value.trim(); if (!title) { alert("Titel?"); addTitleInput.focus(); return; }
+        const title = addTitleInput.value.trim(); if (!title) { alert("Bitte gebe einen Titel an."); addTitleInput.focus(); return; }
         const itemType = document.querySelector('input[name="add-item-type"]:checked').value;
         const tags = getTagsFromTagsContainer(addTagsContainer); // Ensure this uses addTagsContainer
         const duration = addDurationInput.value.trim() || 'N/A'; // Ensure this uses addDurationInput
@@ -288,9 +288,61 @@ document.addEventListener('DOMContentLoaded', () => { // Ensure this wraps the e
      function closeSettingsModal() { closeModal(settingsModal); }
      function clearStatusMessages() { exportStatus.textContent = ''; exportStatus.className = ''; importStatus.textContent = ''; importStatus.className = ''; copyStatus.textContent = ''; copyStatus.className = ''; }
      function showStatus(element, message, type = 'info') { element.textContent = message; element.className = type; setTimeout(() => { element.textContent = ''; element.className = ''; }, 4000); }
-     function exportData() { try { const dataStr = JSON.stringify(watchListsData, null, 2); const dataBlob = new Blob([dataStr], {type: "application/json"}); const url = URL.createObjectURL(dataBlob); const link = document.createElement('a'); link.href = url; link.download = "watchlist_export_v10.json"; document.body.appendChild(link); link.click(); document.body.removeChild(link); URL.revokeObjectURL(url); showStatus(exportStatus, "Export erfolgreich!", 'success'); } catch (error) { console.error("Export failed:", error); showStatus(exportStatus, "Export fehlgeschlagen.", 'error'); } }
+    function exportData() { try { 
+        const now = new Date();
+        const dateStr = now.toISOString().replace(/[:.]/g, '-').slice(0, 19); // Format: YYYY-MM-DDTHH-mm-ss
+        const dataStr = JSON.stringify(watchListsData, null, 2);
+        const dataBlob = new Blob([dataStr], {type: "application/json"});
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `watchlist_export_${dateStr}.json`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showStatus(exportStatus, "Export erfolgreich!", 'success');
+    } catch (error) {
+        console.error("Export failed:", error);
+        showStatus(exportStatus, "Export fehlgeschlagen.", 'error');
+    } }
      function importData(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (e) => { try { const importedRaw = JSON.parse(e.target.result); if (typeof importedRaw === 'object' && importedRaw !== null && Array.isArray(importedRaw.serien) && Array.isArray(importedRaw.filme)) { if (confirm("Aktuelle Watchlist ersetzen?")) { localStorage.setItem('watchListsData_v10', JSON.stringify(importedRaw)); loadData(); setActiveTab('serien'); renderLists(); showStatus(importStatus, "Import erfolgreich!", 'success'); } else { showStatus(importStatus, "Import abgebrochen."); } } else { throw new Error("Ungültiges Dateiformat."); } } catch (error) { console.error("Import failed:", error); showStatus(importStatus, `Import fehlgeschlagen: ${error.message}`, 'error'); } finally { importFileInput.value = null; } }; reader.onerror = () => { showStatus(importStatus, "Fehler beim Lesen der Datei.", 'error'); importFileInput.value = null; }; reader.readAsText(file); }
-     const aiHelpPrompt = `... (V10 prompt is valid) ...`; // Keep the prompt content the same
+        const aiHelpPrompt = `
+    Bitte formatiere die folgende Liste von Filmen und Serien in das JSON-Format für meine Watchlist-Anwendung. Das JSON-Hauptobjekt muss zwei Schlüssel enthalten: "serien" und "filme". Beide Schlüssel sollten ein Array von Objekten als Wert haben.
+
+Jedes Objekt innerhalb der Arrays repräsentiert einen Film oder eine Serie und sollte die folgenden Schlüssel haben:
+- "id": Ein eindeutiger String (kannst du generieren, z.B. mit Zeitstempel + Zufallszahl).
+- "type": Ein String, entweder "serien" oder "filme", je nachdem, in welchem Array es sich befindet.
+- "title": Der Titel des Films oder der Serie (String).
+- "tags": Ein Array von Strings, das die Tags (früher Genres) auflistet (z.B. ["Action", "Sci-Fi"]). Wenn keine Tags angegeben sind, verwende ein leeres Array [].
+- "duration": Ein String, der die Dauer beschreibt (z.B. "148 min", "3 Staffeln", "N/A"). Wenn keine Dauer angegeben ist, verwende "N/A".
+- "isUpcoming": Ein boolescher Wert (true oder false). Setze ihn standardmäßig auf false, es sei denn, die Liste deutet darauf hin, dass er "upcoming" ist.
+
+Hier ist die Liste, die du formatieren sollst:
+[HIER DIE UNFORMATIERTE LISTE EINFÜGEN]
+
+Beispiel für ein Objekt im "filme"-Array:
+{
+  "id": "1700000000000-0.123",
+  "type": "filme",
+  "title": "Inception",
+  "tags": ["Action", "Sci-Fi", "Thriller"],
+  "duration": "148 min",
+  "isUpcoming": false
+}
+
+Beispiel für ein Objekt im "serien"-Array:
+{
+  "id": "1700000000001-0.456",
+  "type": "serien",
+  "title": "Stranger Things",
+  "tags": ["Drama", "Fantasy", "Horror"],
+  "duration": "4 Staffeln",
+  "isUpcoming": true
+}
+
+Bitte gib nur das vollständige JSON-Objekt zurück, beginnend mit { und endend mit }.
+`;
      function copyHelpText() { if (!navigator.clipboard) { showStatus(copyStatus, "Clipboard API nicht verfügbar.", 'error'); return; } const v10Prompt = aiHelpPrompt.replace(/"genres"/g, '"tags"').replace(/Genre/g, 'Tag').replace(/genres/g, 'tags'); navigator.clipboard.writeText(v10Prompt.trim()).then(() => { showStatus(copyStatus, "AI Prompt kopiert!", 'success'); }).catch(err => { console.error('Kopieren fehlgeschlagen:', err); showStatus(copyStatus, "Kopieren fehlgeschlagen.", 'error'); }); }
 
     // --- Initial Load ---
