@@ -6,21 +6,21 @@
     <title>Watchlist</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to CSS file -->
 </head>
-<body>
+<body> <!-- Removed initial class -->
 
     <!-- Main Application -->
     <div id="app-container">
         <div id="settings-cog" title="Einstellungen">⚙️</div>
         <h1>Watchlist</h1>
 
-         <!-- Controls Area (Search + Add Button) -->
+         <!-- Controls Area (Moved Above Tabs) -->
          <div class="controls-area">
              <div class="search-container">
                  <input type="search" id="search-input" placeholder="Titel suchen...">
-                 <!-- Filter button removed for V1.1 -->
+                 <button id="open-filter-btn" title="Erweiterte Suche">🔍</button>
              </div>
              <div class="add-item-controls">
-                 <button id="open-add-modal-btn">Hinzufügen</button>
+                 <button id="open-add-modal-btn">Hinzufügen</button> <!-- Text Updated -->
              </div>
          </div>
 
@@ -44,11 +44,9 @@
              <h2>Neuen Eintrag hinzufügen</h2>
              <div><label for="add-title">Titel:</label><input type="text" id="add-title" required></div>
               <div id="add-type-selection"><label>Typ:</label><label><input type="radio" name="add-item-type" value="serien" checked> Serie</label><label><input type="radio" name="add-item-type" value="filme"> Film</label></div>
-              <!-- Simplified Genre Input -->
-              <div><label for="add-genre">Genre:</label><input type="text" id="add-genre"></div>
-             <div><label for="add-duration">Dauer:</label><input type="text" id="add-duration" placeholder="z.B. 120 min / 3 Staffeln"></div>
-             <!-- Upcoming Checkbox -->
-             <div id="add-upcoming-checkbox-group"><label for="add-upcoming-checkbox">Upcoming: <input type="checkbox" id="add-upcoming-checkbox"></label></div>
+              <div id="add-tags-input-group"><label for="add-tags-input">Tags:</label><input type="text" id="add-tags-input" placeholder="Tag eingeben, Enter drücken"><div id="add-tags-container" class="tags-container"></div></div>
+             <div id="add-duration-date-group"><label for="add-duration" id="add-duration-label">Dauer:</label><input type="text" id="add-duration" placeholder="z.B. 120 min / 3 Staffeln"></div>
+             <div id="add-upcoming-checkbox-group"><label for="add-upcoming-checkbox"><input type="checkbox" id="add-upcoming-checkbox">Upcoming</label></div>
              <div class="modal-actions"><button id="save-add-btn" class="save-btn">Speichern</button><button id="cancel-add-btn" class="cancel-btn">Abbrechen</button></div>
         </div>
     </div>
@@ -60,11 +58,9 @@
              <input type="hidden" id="edit-item-id">
              <input type="hidden" id="edit-item-type">
              <div><label for="edit-title">Titel:</label><input type="text" id="edit-title"></div>
-              <!-- Simplified Genre Input -->
-             <div><label for="edit-genre">Genre:</label><input type="text" id="edit-genre"></div>
-             <div><label for="edit-duration">Dauer:</label><input type="text" id="edit-duration"></div>
-              <!-- Upcoming Checkbox (Always visible in V1.1) -->
-             <div id="edit-upcoming-checkbox-group"><label for="edit-upcoming-checkbox">Upcoming: <input type="checkbox" id="edit-upcoming-checkbox"></label></div>
+              <div id="edit-tags-input-group"><label for="edit-tags-input">Tags:</label><input type="text" id="edit-tags-input" placeholder="Tag eingeben, Enter drücken"><div id="edit-tags-container" class="tags-container"></div></div>
+             <div id="edit-duration-date-group"><label for="edit-duration-date" id="edit-duration-date-label">Dauer:</label><input type="text" id="edit-duration-date"></div>
+              <div id="edit-upcoming-checkbox-group"><label for="edit-upcoming-checkbox"><input type="checkbox" id="edit-upcoming-checkbox">Upcoming</label></div>
              <div class="modal-actions"><button id="save-edit-btn" class="save-btn">Speichern</button><button id="cancel-edit-btn" class="cancel-btn">Abbrechen</button></div>
         </div>
     </div>
@@ -80,8 +76,30 @@
          </div>
      </div>
 
+      <!-- Extended Search Modal -->
+     <div id="extended-search-modal" class="modal">
+         <div class="modal-content">
+             <h2>Erweiterte Suche</h2>
+             <div class="filter-group">
+                 <label>Typ:</label>
+                 <div class="filter-type-options">
+                     <label><input type="checkbox" name="filter-type" value="serien" checked> Serien</label>
+                     <label><input type="checkbox" name="filter-type" value="filme" checked> Filme</label>
+                 </div>
+             </div>
+             <div class="filter-group">
+                 <label>Tags:</label>
+                 <div id="filter-tags-container" class="filter-tags-container"> <span style="color: var(--text-muted-color);">Keine Tags vorhanden.</span> </div>
+             </div>
+             <div class="modal-actions">
+                 <button id="reset-filters-btn" class="cancel-btn">Filter zurücksetzen</button>
+                 <button id="apply-filters-btn" class="save-btn">Anwenden & Schließen</button>
+             </div>
+         </div>
+     </div>
+
      <!-- Footer -->
-     <div id="credits-footer" title="V1.1"> <!-- Updated Version -->
+     <div id="credits-footer" title="V1.2"> <!-- Keep V10 -->
          made by Marvin with ❤️
      </div>
 

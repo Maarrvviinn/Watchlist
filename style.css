@@ -1,29 +1,43 @@
 /* --- CSS Variables (Dark Mode Default) --- */
 :root {
-    --bg-color: #1f1f1f; --surface-color: #2a2a2a; --primary-color: #4a90e2; --primary-hover-color: #3a80d2; --text-color: #e0e0e0; --text-muted-color: #a0a0a0; --border-color: #404040; --input-bg-color: #333333; --input-border-color: #505050; --danger-color: #e57373; --danger-hover-color: #d32f2f; --warning-color: #ffb74d; --warning-hover-color: #f57c00; --success-color: #81c784; --success-hover-color: #388e3c; --cancel-color: #757575; --cancel-hover-color: #616161; --shadow-color: rgba(0, 0, 0, 0.3); --grab-cursor: grab; --grabbing-cursor: grabbing;
+    --bg-color: #1f1f1f; --surface-color: #2a2a2a; --primary-color: #4a90e2; --primary-hover-color: #3a80d2; --text-color: #e0e0e0; --text-muted-color: #a0a0a0; --border-color: #404040; --input-bg-color: #333333; --input-border-color: #505050; --danger-color: #e57373; --danger-hover-color: #d32f2f; --warning-color: #ffb74d; --warning-hover-color: #f57c00; --success-color: #81c784; --success-hover-color: #388e3c; --cancel-color: #757575; --cancel-hover-color: #616161; --shadow-color: rgba(0, 0, 0, 0.3); --grab-cursor: grab; --grabbing-cursor: grabbing; --tag-bg: var(--primary-color); --tag-text: #1f1f1f; --tag-delete-hover: var(--danger-color);
     --icon-color: var(--text-muted-color); --icon-hover-color-edit: var(--warning-color); --icon-hover-color-delete: var(--danger-color); --drop-indicator-color: var(--primary-color);
+    --filter-tag-bg: var(--input-bg-color); --filter-tag-border: var(--input-border-color); --filter-tag-text: var(--text-muted-color); --filter-tag-hover-bg: var(--border-color); --filter-tag-active-bg: var(--primary-color); --filter-tag-active-text: var(--tag-text);
 }
 
 /* --- Basic Styling --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding-top: 30px; padding-bottom: 50px; font-size: 16px; position: relative; }
-button { cursor: pointer; padding: 10px 15px; border: none; border-radius: 5px; background-color: var(--primary-color); color: var(--tag-text); /* Using tag-text for default contrast */ font-size: 1em; font-weight: bold; transition: background-color 0.2s ease; }
+button { cursor: pointer; padding: 10px 15px; border: none; border-radius: 5px; background-color: var(--primary-color); color: var(--tag-text); font-size: 1em; font-weight: bold; transition: background-color 0.2s ease; }
 button:hover { background-color: var(--primary-hover-color); }
 button:focus, input:focus, select:focus, textarea:focus, .icon-btn:focus { outline: none; box-shadow: none; }
 
 /* --- Specific Button Colors --- */
-#save-add-btn,      /* Add modal save */
-#save-edit-btn,     /* Edit modal save */
-#open-add-modal-btn, /* Top Add button */
-#export-btn,        /* Export button */
-#import-btn         /* Import button */
+#apply-filters-btn, #save-add-btn, #save-edit-btn, #open-add-modal-btn, #export-btn, #import-btn
 {
-    background-color: var(--primary-color); /* Blue background */
     color: #ffffff !important; /* Force white text */
 }
-#save-add-btn:hover, #save-edit-btn:hover, #open-add-modal-btn:hover, #export-btn:hover, #import-btn:hover {
-     background-color: var(--primary-hover-color); /* Darker blue on hover */
+/* Set background for Export/Import to be consistent */
+ #export-btn, #import-btn {
+     background-color: var(--primary-color);
+ }
+  #export-btn:hover, #import-btn:hover {
+     background-color: var(--primary-hover-color);
+ }
+/* Hinzufügen button specific colors */
+#open-add-modal-btn {
+     background-color: var(--primary-color); /* Blue background */
+}
+ #open-add-modal-btn:hover {
+     background-color: var(--primary-hover-color);
+ }
+/* Save buttons in modals */
+.save-btn {
+    background-color: var(--primary-color); /* Blue background for Speichern */
+}
+.save-btn:hover {
+    background-color: var(--primary-hover-color);
 }
 
 
@@ -34,7 +48,7 @@ select { appearance: none; background-image: url('data:image/svg+xml;utf8,<svg f
 
 /* --- Main App Container --- */
 #app-container {
-    display: block; /* Show by default (no login) */
+    display: block; /* Visible by default */
     background-color: var(--surface-color); padding: 30px; border-radius: 8px; box-shadow: 0 4px 15px var(--shadow-color); width: 100%; max-width: 850px; border: 1px solid var(--border-color); position: relative;
 }
 
@@ -49,14 +63,16 @@ h1 { text-align: center; margin-bottom: 25px; color: var(--primary-color); font-
  .controls-area { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 10px; flex-wrap: wrap; }
  .search-container { display: flex; align-items: center; flex-grow: 1; max-width: 500px; gap: 8px; }
  #search-input { flex-grow: 1; margin-bottom: 0; padding-right: 30px; }
- /* Filter button removed */
- #open-add-modal-btn { padding: 10px 20px; font-size: 1em; white-space: nowrap; } /* Color set individually */
+ #open-filter-btn { padding: 8px 10px; font-size: 1.2em; line-height: 1; background-color: var(--input-bg-color); color: var(--text-muted-color); border: 1px solid var(--input-border-color); }
+ #open-filter-btn:hover { background-color: var(--border-color); color: var(--text-color); }
+ #open-add-modal-btn { padding: 10px 20px; font-size: 1em; white-space: nowrap; }
 
 /* --- Tabs --- */
 .tab-navigation { display: flex; justify-content: center; border-bottom: 2px solid var(--border-color); margin-bottom: 20px; }
 .tab-button { padding: 10px 20px; cursor: pointer; border: none; background-color: transparent; font-size: 1.1em; color: var(--text-muted-color); border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color 0.2s ease, border-color 0.2s ease, font-weight 0.2s ease; font-weight: normal; }
 .tab-button:hover { color: var(--text-color); background-color: transparent; }
 .tab-button.active { color: var(--primary-color); border-bottom-color: var(--primary-color); font-weight: bold; }
+ .tab-button.inactive-search { color: var(--text-muted-color); border-bottom-color: transparent; font-weight: normal; }
 
 /* --- Watch Lists --- */
 .watchlist { display: none; list-style: none; padding: 0; max-height: 540px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 5px; padding: 10px; background-color: var(--bg-color); position: relative; }
@@ -76,6 +92,7 @@ h1 { text-align: center; margin-bottom: 25px; color: var(--primary-color); font-
 
 .item-details { flex-grow: 1; margin-right: 15px; }
 .item-details strong { display: block; font-size: 1.2em; margin-bottom: 5px; color: var(--text-color); word-break: break-word; }
+ .item-details strong .item-type-label { font-size: 0.8em; color: var(--text-muted-color); font-weight: normal; margin-left: 5px; }
 .item-meta { display: flex; flex-wrap: wrap; gap: 5px 15px; font-size: 0.9em; color: var(--text-muted-color); margin-top: 5px; }
 .item-meta span { display: inline-flex; align-items: baseline; white-space: normal; }
 .item-meta .label { font-weight: bold; color: var(--text-muted-color); margin-right: 5px; white-space: nowrap; }
@@ -89,7 +106,7 @@ h1 { text-align: center; margin-bottom: 25px; color: var(--primary-color); font-
 
 /* --- Modals --- */
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8); align-items: center; justify-content: center; padding: 20px; }
-.modal-content { background-color: var(--surface-color); margin: auto; padding: 30px; border: 1px solid var(--border-color); width: 90%; max-width: 550px; /* Adjusted width back */ border-radius: 8px; box-shadow: 0 5px 15px var(--shadow-color); position: relative; }
+.modal-content { background-color: var(--surface-color); margin: auto; padding: 30px; border: 1px solid var(--border-color); width: 90%; max-width: 600px; border-radius: 8px; box-shadow: 0 5px 15px var(--shadow-color); position: relative; }
 .modal h2 { margin-top: 0; margin-bottom: 25px; color: var(--primary-color); text-align: center; }
 .modal label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--text-muted-color); }
 .modal input[type="text"], .modal input[type="date"], .modal select { width: 100%; margin-bottom: 20px; }
@@ -97,23 +114,27 @@ h1 { text-align: center; margin-bottom: 25px; color: var(--primary-color); font-
 .modal-actions button { margin-left: 10px; padding: 10px 20px; }
 .modal-actions .cancel-btn { background-color: var(--cancel-color); color: var(--text-color); }
 .modal-actions .cancel-btn:hover { background-color: var(--cancel-hover-color); }
-.modal-actions .save-btn { background-color: var(--primary-color); /* Color set individually */ }
+.modal-actions .save-btn { background-color: var(--primary-color); /* color set individually */ }
 .modal-actions .save-btn:hover { background-color: var(--primary-hover-color); }
 
-/* --- Simplified Genre/Tag Styling (No tags needed for V1.1) --- */
-/* Remove tag container styles if not used */
+/* --- Tag Styling --- */
+#add-tags-input-group, #edit-tags-input-group { margin-bottom: 20px; }
+.tags-container { display: none; flex-wrap: wrap; gap: 5px; margin-top: 8px; padding: 8px; border: 1px solid var(--input-border-color); border-radius: 5px; background-color: var(--input-bg-color); min-height: 40px; }
+.tags-container.visible { display: flex; }
+.tag { background-color: var(--tag-bg); color: var(--tag-text); padding: 3px 8px; border-radius: 3px; font-size: 0.9em; display: flex; align-items: center; white-space: nowrap; }
+.tag .remove-tag { margin-left: 8px; cursor: pointer; font-weight: bold; color: var(--tag-text); opacity: 0.7; transition: opacity 0.2s ease, color 0.2s ease; }
+.tag .remove-tag:hover { opacity: 1; color: var(--danger-color); }
+#add-tags-input, #edit-tags-input { margin-bottom: 0; }
 
 /* --- Add/Edit Modal Specifics --- */
 #add-type-selection, #edit-type-selection { margin-bottom: 20px; }
 #add-type-selection label, #edit-type-selection label { display: inline-block; margin-right: 15px; font-weight: normal; color: var(--text-color); cursor: pointer; }
 #add-type-selection input[type="radio"], #edit-type-selection input[type="radio"] { margin-right: 5px; accent-color: var(--primary-color); }
 #add-upcoming-checkbox-group, #edit-upcoming-checkbox-group { margin-top: 20px; }
-/* Remove hidden class for upcoming checkbox */
-#add-upcoming-checkbox-group label, #edit-upcoming-checkbox-group label { display: inline-flex; /* Align label and checkbox */ align-items: center; cursor: pointer; font-weight: normal; color: var(--text-color); margin-bottom: 0; }
-#add-upcoming-checkbox-group input[type="checkbox"], #edit-upcoming-checkbox-group input[type="checkbox"] { margin-left: 8px; /* Space after label text */ width: auto; margin-bottom: 0; accent-color: var(--primary-color); height: 1.1em; width: 1.1em; }
-/* Remove duration/date group margins as they are sequential now */
+#edit-upcoming-checkbox-group.hidden { display: none; }
+#add-upcoming-checkbox-group label, #edit-upcoming-checkbox-group label { display: flex; align-items: center; cursor: pointer; font-weight: normal; color: var(--text-color); margin-bottom: 0; }
+#add-upcoming-checkbox-group input[type="checkbox"], #edit-upcoming-checkbox-group input[type="checkbox"] { margin-right: 8px; width: auto; margin-bottom: 0; accent-color: var(--primary-color); height: 1.1em; width: 1.1em; }
 #add-duration-date-group, #edit-duration-date-group { margin-bottom: 0; }
-
 
 /* --- Settings Modal Specifics --- */
 #settings-modal .modal-content { text-align: center; }
@@ -126,6 +147,21 @@ h1 { text-align: center; margin-bottom: 25px; color: var(--primary-color); font-
 #import-status, #export-status, #copy-status { min-height: 1.5em; margin-top: 5px; font-size: 0.9em; }
 #import-status.success, #export-status.success, #copy-status.success { color: var(--success-color); }
 #import-status.error, #export-status.error { color: var(--danger-color); }
+
+/* --- Extended Search Modal --- */
+#extended-search-modal .modal-content { max-width: 650px; }
+.filter-group { margin-bottom: 25px; text-align: left; }
+.filter-group > label { margin-bottom: 10px; display: block; }
+.filter-tags-container { display: flex; flex-wrap: wrap; gap: 8px; max-height: 150px; overflow-y: auto; padding: 10px; border: 1px solid var(--input-border-color); border-radius: 5px; background-color: var(--input-bg-color); }
+.filter-tag-btn { background-color: var(--filter-tag-bg); color: var(--filter-tag-text); border: 1px solid var(--filter-tag-border); padding: 4px 10px; border-radius: 15px; font-size: 0.9em; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+.filter-tag-btn:hover { background-color: var(--filter-tag-hover-bg); }
+.filter-tag-btn.active { background-color: var(--filter-tag-active-bg); color: var(--filter-tag-active-text); border-color: var(--filter-tag-active-bg); font-weight: bold; }
+.filter-type-options label { display: inline-flex; align-items: center; margin-right: 20px; font-weight: normal; color: var(--text-color); cursor: pointer; }
+.filter-type-options input[type="checkbox"] { margin-right: 5px; accent-color: var(--primary-color); width: 1.1em; height: 1.1em; margin-bottom: 0; }
+#extended-search-modal .modal-actions { display: flex; justify-content: space-between; }
+#reset-filters-btn { background-color: var(--cancel-color); color: var(--text-color); /* Ensure cancel button has contrast */ }
+#reset-filters-btn:hover { background-color: var(--cancel-hover-color); }
+
 
 /* --- Footer --- */
 #credits-footer { position: fixed; bottom: 10px; right: 15px; font-size: 0.8em; color: var(--text-muted-color); cursor: default; z-index: 10; user-select: none; }
