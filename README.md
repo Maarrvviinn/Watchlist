@@ -1,8 +1,9 @@
-# Watchlist Web App (v1.4) 🇩🇪
+# Watchlist Web App 🇩🇪
 
-Eine einfache, aber leistungsstarke Webanwendung zur Verwaltung deiner persönlichen Watchlist für Filme und Serien. Organisiere, was du sehen möchtest, passe das Aussehen an und behalte den Überblick – alles direkt in deinem Browser.
+Verwalte deine persönliche Watchlist für Filme und Serien mit dieser einfachen Webanwendung. Organisiere, was du sehen möchtest, passe das Aussehen an und synchronisiere deine Daten über ein optionales Konto – alles direkt im Browser.
 
 [Watchlist Screenshot](https://i.imgur.com/eKdInHb.png)
+
 
 ---
 
@@ -11,23 +12,28 @@ Eine einfache, aber leistungsstarke Webanwendung zur Verwaltung deiner persönli
 *   **Listen-Verwaltung:**
     *   Separate Listen für "Serien", "Filme" und "Upcoming".
     *   Einträge hinzufügen, bearbeiten und löschen.
-    *   Jedem Eintrag Details zuweisen: Titel, Typ (Serie/Film), Tags (z.B. Genres), Dauer (z.B. "3 Staffeln", "120 min").
-    *   Einträge als "Upcoming" markieren, um zukünftige Veröffentlichungen zu verfolgen.
+    *   Details pro Eintrag: Titel, Typ (Serie/Film), Tags (z.B. Genres), Dauer (z.B. "3 Staffeln", "120 min").
+    *   Einträge als "Upcoming" markieren für zukünftige Veröffentlichungen.
+*   **Cloud-Synchronisation (Firebase):**
+    *   **Optionales Konto:** Erstelle ein Konto (E-Mail/Passwort), um deine Watchlist sicher in der Cloud zu speichern.
+    *   **Geräteübergreifend:** Greife von verschiedenen Geräten auf deine synchronisierte Liste zu (Login erforderlich).
 *   **Interaktive Bedienung:**
     *   **Drag & Drop:** Einträge innerhalb der "Serien"- und "Filme"-Listen einfach per Drag & Drop neu anordnen.
-    *   **Auto-Scroll:** Die Liste scrollt automatisch, wenn beim Ziehen eines Eintrags der obere oder untere Rand erreicht wird.
+    *   **Automatisches Speichern:** Änderungen an der Watchlist werden bei eingeloggtem Konto kurz nach der Aktion automatisch gespeichert und synchronisiert.
+    *   **Auto-Scroll:** Die Liste scrollt automatisch, wenn beim Ziehen eines Eintrags der Rand erreicht wird.
 *   **Suche & Filter:**
     *   **Schnellsuche:** Suche nach Titeln direkt im Hauptbereich.
     *   **Erweiterte Suche:** Filtere Einträge nach Typ (Serie/Film) und/oder mehreren Tags gleichzeitig.
 *   **Anpassbare Darstellung:** 🎨
     *   **Theme:** Wähle zwischen einem hellen und einem dunklen Design.
-    *   **Akzentfarbe:** Passe die primäre Farbe der Benutzeroberfläche an deinen Geschmack an (funktioniert für beide Themes).
-    *   **Textgröße:** Ändere die globale Schriftgröße für bessere Lesbarkeit.
-    *   **Listenhöhe:** Stelle ein, wie viele Einträge maximal angezeigt werden, bevor ein Scrollbalken erscheint.
-*   **Datenverwaltung & Persistenz:**
-    *   **LocalStorage:** Alle deine Daten und Einstellungen werden lokal im Browser gespeichert.
-    *   **Import/Export:** Exportiere deine gesamte Watchlist als JSON-Datei zur Sicherung oder zum Teilen. Importiere eine zuvor exportierte JSON-Datei, um deine Liste wiederherzustellen.
-    *   **AI Format Hilfe:** Kopiere einen Prompt für eine AI (wie ChatGPT), um eine unformatierte Liste in das korrekte JSON-Format für den Import umzuwandeln.
+    *   **Akzentfarbe:** Passe die primäre Farbe der Benutzeroberfläche an (wirkt sich auf beide Themes aus).
+    *   **Textgröße:** Ändere die globale Schriftgröße.
+    *   **Listenhöhe:** Stelle ein, wie viele Einträge maximal angezeigt werden, bevor gescrollt wird.
+*   **Datenverwaltung:**
+    *   **Cloud-Speicher (Firestore):** Deine Watchlist-Daten werden sicher in deinem Firebase-Konto gespeichert, wenn du eingeloggt bist.
+    *   **Lokaler Einstellungs-Speicher (LocalStorage):** Deine Darstellungseinstellungen (Theme, Farben, etc.) werden lokal im Browser gespeichert.
+    *   **Lokaler Import/Export:** Exportiere deine *aktuelle* Watchlist als JSON-Datei zur Sicherung oder zum manuellen Übertragen. Importiere eine JSON-Datei, um die *aktuelle* Liste zu ersetzen (wird bei Login synchronisiert).
+    *   **AI Format Hilfe:** Kopiere einen Prompt für eine AI (wie ChatGPT), um eine Textliste in das korrekte JSON-Format für den Import umzuwandeln.
 *   **Einstellungen:** Zentrales Einstellungsmenü für alle Anpassungen und Datenaktionen.
 
 ---
@@ -36,84 +42,82 @@ Eine einfache, aber leistungsstarke Webanwendung zur Verwaltung deiner persönli
 
 *   **HTML5:** Struktur der Anwendung.
 *   **CSS3:** Styling, Layout (Flexbox) und Theming (CSS Variablen).
-*   **Vanilla JavaScript (ES6+):** Komplette Anwendungslogik, DOM-Manipulation, Event Handling, Drag & Drop, LocalStorage-Interaktion.
-*   **LocalStorage:** Clientseitige Speicherung der Watchlist-Daten und Benutzereinstellungen.
+*   **Vanilla JavaScript (ES6+):** Komplette Anwendungslogik, DOM-Manipulation, Event Handling, Drag & Drop.
+*   **Firebase Authentication:** Benutzerregistrierung und Login (E-Mail/Passwort).
+*   **Cloud Firestore:** NoSQL-Datenbank zur Speicherung der Watchlist-Daten in der Cloud pro Benutzer.
+*   **LocalStorage:** Clientseitige Speicherung der Benutzereinstellungen (Theme, Farben etc.).
 
 ---
 
 ## 💻 Setup & Ausführung
 
-Diese Anwendung ist rein clientseitig und benötigt keinen Server.
+Diese Anwendung kann direkt online genutzt oder lokal ausgeführt werden. Für die Cloud-Synchronisation ist eine Internetverbindung erforderlich.
 
+**Online (Empfohlen):**
+*   Die App ist über GitHub Pages verfügbar: [**https://maarrvviinn.github.io/Watchlist/**] 
+
+**Lokal:**
 1.  Klone das Repository oder lade die Dateien `index.html`, `style.css` und `script.js` in denselben Ordner herunter.
-2.  Öffne die Datei `index.html` in einem modernen Webbrowser (wie Chrome, Firefox, Edge, Safari).
-
-Das war's! Deine Watchlist ist einsatzbereit.
+2.  Öffne die Datei `index.html` in einem modernen Webbrowser (Chrome, Firefox, Edge, Safari).
 
 ---
 
 ## 🖱️ Benutzung
 
-*   **Tabs:** Klicke auf "Serien", "Filme" oder "Upcoming", um die entsprechende Liste anzuzeigen.
-*   **Hinzufügen:** Klicke auf "Hinzufügen", fülle die Details im Modal aus und speichere.
-*   **Bearbeiten/Löschen:** Fahre über einen Listeneintrag und klicke auf das Stift-Symbol (✏️) zum Bearbeiten oder das Mülleimer-Symbol (🗑️) zum Löschen.
-*   **Sortieren:** Klicke und halte einen Eintrag in der "Serien"- oder "Filme"-Liste, ziehe ihn an die gewünschte Position und lasse ihn los.
-*   **Suchen:** Gib einen Suchbegriff in das Suchfeld oben ein. Die Liste aktualisiert sich automatisch.
-*   **Filtern:** Klicke auf das Lupen-Symbol (🔍) neben der Suche, um die erweiterte Suche zu öffnen. Wähle Typen und/oder Tags aus und klicke auf "Anwenden & Schließen".
-*   **Einstellungen:** Klicke auf das Zahnrad-Symbol (⚙️) oben rechts, um das Einstellungsmenü zu öffnen.
+*   **Tabs:** Klicke auf "Serien", "Filme" oder "Upcoming", um die Listen zu wechseln.
+*   **Hinzufügen:** Klicke auf "Hinzufügen", fülle die Details aus und speichere. Die Speicherung in der Cloud erfolgt automatisch, wenn du eingeloggt bist.
+*   **Bearbeiten/Löschen:** Fahre über einen Eintrag und klicke auf ✏️ (Bearbeiten) oder 🗑️ (Löschen). Änderungen werden automatisch gespeichert/synchronisiert.
+*   **Sortieren:** Klicke und ziehe einen Eintrag in den "Serien"- oder "Filme"-Listen, um ihn neu zu positionieren. Die neue Reihenfolge wird automatisch gespeichert/synchronisiert.
+*   **Suchen/Filtern:** Nutze das Suchfeld oder die erweiterte Suche (🔍).
+*   **Einstellungen/Login:** Klicke auf das Zahnrad (⚙️) oben rechts.
 
 ---
 
 ## ⚙️ Einstellungen erklärt
 
-Im Einstellungsmenü (Zugriff über ⚙️) kannst du Folgendes anpassen:
+Im Einstellungsmenü (Zugriff über ⚙️):
 
-*   **Theme (☀️/🌙):** Schaltet zwischen hellem und dunklem Design um.
-*   **Akzentfarbe:** Wähle eine beliebige Farbe, die als Hauptfarbe für Buttons, Links, Tabs etc. verwendet wird. Die gewählte Farbe wird für das aktuell aktive Theme gespeichert.
-*   **Textgröße:** Passe die allgemeine Schriftgröße über den Schieberegler an.
-*   **Max. Einträge:** Lege fest, wie viele Einträge in einer Liste sichtbar sind, bevor gescrollt werden muss.
-*   **Zurücksetzen (↩️):** Setzt *nur* die Darstellungseinstellungen (Theme, Akzentfarbe, Textgröße, Max. Einträge) auf die Standardwerte zurück. Deine Watchlist-Daten bleiben erhalten.
-*   **Daten Exportieren:** Lädt deine aktuelle Watchlist als `watchlist_export_DATUM_ZEIT.json`-Datei herunter.
-*   **Daten Importieren:** Erlaubt dir, eine zuvor exportierte JSON-Datei auszuwählen, um deine Watchlist zu ersetzen (fragt zur Sicherheit nach).
-*   **Format Hilfe (?):** Kopiert einen detaillierten Prompt in die Zwischenablage, den du einer AI geben kannst, um eine Textliste in das korrekte JSON-Format für den Import zu konvertieren.
+*   **Darstellung:**
+    *   **Theme (☀️/🌙):** Heller oder dunkler Modus.
+    *   **Akzentfarbe:** Wähle die Hauptfarbe der UI.
+    *   **Textgröße:** Passe die Schriftgröße an.
+    *   **Max. Einträge:** Definiere die sichtbare Listenhöhe vor dem Scrollen.
+    *   **Zurücksetzen (↩️):** Setzt *nur* die Darstellungseinstellungen zurück.
+*   **Daten & Sync:**
+    *   **Login/Logout:** Zeigt entweder den "Login / Sync"-Button (wenn ausgeloggt) oder deine E-Mail und den Logout-Button (🚪) (wenn eingeloggt). Login ermöglicht Cloud-Speicherung und Synchronisation.
+    *   **Export (Lokal):** Lädt die *momentan angezeigte* Watchlist als JSON-Datei herunter (lokales Backup).
+    *   **Import (Lokal):** Ersetzt die *momentan angezeigte* Watchlist mit Daten aus einer JSON-Datei. Wenn du eingeloggt bist, wird diese importierte Liste anschließend automatisch in die Cloud synchronisiert.
+    *   **Format Hilfe (?):** Kopiert einen Prompt für AIs zur JSON-Formatierung für den Import.
 
 ---
 
 ## 💾 Datenformat (für Import/Export)
 
-Die Anwendung verwendet das folgende JSON-Format für den Import und Export:
+Das JSON-Format bleibt unverändert:
 
 ```json
 {
   "serien": [
     {
-      "id": "1700000000001-0.456",
+      "id": "generierte-id-1",
       "type": "serien",
-      "title": "Stranger Things",
-      "tags": ["Drama", "Fantasy", "Horror"],
-      "duration": "4 Staffeln",
+      "title": "Beispiel Serie",
+      "tags": ["Genre1", "Genre2"],
+      "duration": "X Staffeln",
       "isUpcoming": false
     }
-    // ... weitere Serien
+    // ...
   ],
   "filme": [
     {
-      "id": "1700000000000-0.123",
+      "id": "generierte-id-2",
       "type": "filme",
-      "title": "Inception",
-      "tags": ["Action", "Sci-Fi", "Thriller"],
-      "duration": "148 min",
+      "title": "Beispiel Film",
+      "tags": ["Genre3"],
+      "duration": "120 min",
       "isUpcoming": false
-    },
-    {
-      "id": "1700000000002-0.789",
-      "type": "filme",
-      "title": "Dune: Part Two",
-      "tags": ["Sci-Fi", "Adventure"],
-      "duration": "166 min",
-      "isUpcoming": true
     }
-    // ... weitere Filme
+    // ...
   ]
 }
 ```
